@@ -194,7 +194,7 @@ function _after(tearDownFunction) {
   };
 }
 
-function multiAdapterRunners(only = 'prisma') {
+function multiAdapterRunners(only) {
   return [
     {
       runner: _keystoneRunner('mongoose', teardownMongoMemoryServer),
