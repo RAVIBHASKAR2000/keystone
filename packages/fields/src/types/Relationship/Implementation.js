@@ -126,10 +126,7 @@ export class Relationship extends Implementation {
       return {
         [this.path]: (item, _, context, info) => {
           // No ID set, so we return null for the value
-          // console.log({ item });
-          // console.log(item && item[this.adapter.idPath]);
           const id = item && (item[this.adapter.idPath] || (item[this.path] && item[this.path].id));
-          // console.log({ id });
           if (!id) {
             return null;
           }
@@ -212,8 +209,6 @@ export class Relationship extends Implementation {
         : [];
       currentValue = currentValue.map(({ id }) => id.toString());
     } else {
-      // console.log({ item });
-      // console.log(item && item[this.adapter.idPath]);
       currentValue = item && (item[this.adapter.idPath] || (item[this.path] && item[this.path].id));
       currentValue = currentValue && currentValue.toString();
     }

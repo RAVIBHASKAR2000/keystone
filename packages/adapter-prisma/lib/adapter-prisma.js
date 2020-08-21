@@ -360,11 +360,11 @@ class PrismaListAdapter extends BaseListAdapter {
         else ret.where = { AND: [ret.where, { name: search }] };
         // const f = escapeRegExp;
         // this._query.andWhere(`${baseTableAlias}.name`, '~*', f(search));
+      } else {
+        // Return no results
+        if (!ret.where) ret.where = { AND: [{ name: null }, { NOT: { name: null } }] };
+        else ret.where = { AND: [ret.where, { name: null }, { NOT: { name: null } }] };
       }
-      // FIXME: How to express this in prisma?
-      // else {
-      //   this._query.whereRaw('false'); // Return no results
-      // }
     }
 
     // Add query modifiers as required
