@@ -126,10 +126,14 @@ export class Relationship extends Implementation {
       return {
         [this.path]: (item, _, context, info) => {
           // No ID set, so we return null for the value
-          if (!item[this.adapter.idPath]) {
+          // console.log({ item });
+          // console.log(item && item[this.adapter.idPath]);
+          const id = item && (item[this.adapter.idPath] || (item[this.path] && item[this.path].id));
+          // console.log({ id });
+          if (!id) {
             return null;
           }
-          const filteredQueryArgs = { where: { id: item[this.adapter.idPath].toString() } };
+          const filteredQueryArgs = { where: { id: id.toString() } };
           // We do a full query to ensure things like access control are applied
           return refList
             .listQuery(filteredQueryArgs, context, refList.gqlNames.listQueryName, info)
@@ -208,7 +212,9 @@ export class Relationship extends Implementation {
         : [];
       currentValue = currentValue.map(({ id }) => id.toString());
     } else {
-      currentValue = item && item[this.adapter.idPath];
+      // console.log({ item });
+      // console.log(item && item[this.adapter.idPath]);
+      currentValue = item && (item[this.adapter.idPath] || (item[this.path] && item[this.path].id));
       currentValue = currentValue && currentValue.toString();
     }
 
